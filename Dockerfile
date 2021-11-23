@@ -1,7 +1,7 @@
 FROM node:10 as builder
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 COPY . .
 ARG API_URI
 ARG SENTRY_DSN
