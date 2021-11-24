@@ -5,7 +5,7 @@
 
   .breadcrumbs {
     background-color: $white;
-    padding: $spacer / 2 $spacer $spacer / 2 $spacer * 1.5;
+    padding: $spacer * 0.5 $spacer $spacer * 0.5 $spacer * 1.5;
     margin-top: $spacer * 2;
   }
 
@@ -22,7 +22,7 @@
     &__description {
       width: 100%;
       min-height: $spacer * 10;
-      margin-bottom: $spacer * 9; 
+      margin-bottom: $spacer * 9;
     }
 
     &__info {
@@ -75,13 +75,13 @@
       &__nav {
         li {
           display: inline-block;
-          padding: $spacer / 2;
+          padding: $spacer * 0.5;
 
           span {
-            width: $spacer / 2;
-            height: $spacer / 2;
+            width: $spacer * 0.5;
+            height: $spacer * 0.5;
             border: 1px solid $gray;
-            border-radius: $spacer / 2;
+            border-radius: $spacer * 0.5;
             display: block;
           }
 

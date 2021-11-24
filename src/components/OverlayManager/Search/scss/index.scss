@@ -53,7 +53,7 @@ $drawer-width: 25rem;
   &__products {
     background: $white;
     overflow: auto;
-    padding: $spacer / 2 0;
+    padding: $spacer * 0.5 0;
     position: relative;
     right: 0;
     transition: 300ms;
@@ -72,7 +72,7 @@ $drawer-width: 25rem;
     }
 
     &__item {
-      padding: $spacer / 2 $spacer;
+      padding: $spacer * 0.5 $spacer;
 
       img {
         width: 3.6rem;
@@ -90,7 +90,7 @@ $drawer-width: 25rem;
       h4 {
         text-transform: uppercase;
         font-weight: $bold-font-weight;
-        padding: $spacer / 4 0;
+        padding: $spacer * 0.25 0;
         color: $base-font-color;
       }
 

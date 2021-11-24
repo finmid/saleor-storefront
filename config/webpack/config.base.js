@@ -1,5 +1,5 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const WebappWebpackPlugin = require("webapp-webpack-plugin");
+const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
@@ -101,7 +101,7 @@ module.exports = ({ sourceDir, distDir }) => ({
       exclude: "node_modules",
     }),
     // PWA plugins
-    new WebappWebpackPlugin({
+    new FaviconsWebpackPlugin({
       favicons: {
         appDescription: "Storefront for the Saleor e-commerce platform",
         appName: "Saleor",
