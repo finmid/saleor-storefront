@@ -6,6 +6,12 @@ export const BASE_URL = "/";
 export const PRODUCTS_PER_PAGE = 6;
 export const SUPPORT_EMAIL = "support@example.com";
 export const PROVIDERS = {
+  FINMID: {
+    label: "finmid",
+  },
+  INVOICE: {
+    label: "invoice",
+  },
   BRAINTREE: {
     label: "Braintree",
   },

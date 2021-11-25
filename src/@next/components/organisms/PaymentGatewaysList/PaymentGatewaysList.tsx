@@ -8,6 +8,8 @@ import {
   DummyPaymentGateway,
   StripePaymentGateway,
   AdyenPaymentGateway,
+  FinmidPaymentGateway,
+  InvoicePaymentGateway,
 } from "..";
 import * as S from "./styles";
 import { IProps } from "./types";
@@ -34,6 +36,66 @@ const PaymentGatewaysList: React.FC<IProps> = ({
         const checked = selectedPaymentGateway === id;
 
         switch (name) {
+          case PROVIDERS.INVOICE.label:
+            return (
+              <div key={index}>
+                <S.Tile checked={checked}>
+                  <Radio
+                    data-test="checkoutPaymentGatewayDummyInput"
+                    name="payment-method"
+                    value="invoice"
+                    checked={checked}
+                    onChange={() =>
+                      selectPaymentGateway && selectPaymentGateway(id)
+                    }
+                    customLabel
+                  >
+                    <span data-test="checkoutPaymentGatewayDummyName">
+                      {name}
+                    </span>
+                  </Radio>
+                </S.Tile>
+                {checked && (
+                  <InvoicePaymentGateway
+                    formRef={formRef}
+                    formId={formId}
+                    processPayment={token => processPayment(id, token)}
+                    initialStatus={selectedPaymentGatewayToken}
+                  />
+                )}
+              </div>
+            );
+
+          case PROVIDERS.FINMID.label:
+            return (
+              <div key={index}>
+                <S.Tile checked={checked}>
+                  <Radio
+                    data-test="checkoutPaymentGatewayDummyInput"
+                    name="payment-method"
+                    value="finmid"
+                    checked={checked}
+                    onChange={() =>
+                      selectPaymentGateway && selectPaymentGateway(id)
+                    }
+                    customLabel
+                  >
+                    <span data-test="checkoutPaymentGatewayDummyName">
+                      {name}
+                    </span>
+                  </Radio>
+                </S.Tile>
+                {checked && (
+                  <FinmidPaymentGateway
+                    formRef={formRef}
+                    formId={formId}
+                    processPayment={token => processPayment(id, token)}
+                    initialStatus={selectedPaymentGatewayToken}
+                  />
+                )}
+              </div>
+            );
+
           case PROVIDERS.BRAINTREE.label:
             return (
               <div key={index}>
