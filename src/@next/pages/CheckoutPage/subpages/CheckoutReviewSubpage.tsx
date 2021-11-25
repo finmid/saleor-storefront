@@ -60,6 +60,13 @@ const CheckoutReviewSubpageWithRef: RefForwardingComponent<
     : undefined;
 
   const getPaymentMethodDescription = () => {
+    if (payment?.gateway === "finmid.payment") {
+      if (payment?.token === "fully-charged")
+        return "Via finmid you can buy goods now and pay in 60 days";
+    }
+    if (payment?.gateway === "invoice.payment") {
+      return "Invoice will be sent to you after we manually confirm the order";
+    }
     if (payment?.gateway === "mirumee.payments.dummy") {
       return `Dummy: ${
         dummyStatuses.find(

@@ -1,75 +1,99 @@
-import { Formik } from "formik";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { Radio } from "@components/atoms";
 
-import * as S from "./styles";
+import { FinmidPaymentGatewayForm } from "./FinmidPaymentGatewayForm";
+import * as LS from "../PaymentGatewaysList/styles";
 import { IProps } from "./types";
 
-export const paymentOptions = [
-  { token: "fully-charged", label: "Buy now, pay in 60 days", enabled: true },
-  {
-    token: "partially-charged",
-    label: "Buy now, repay with 3 equal installments every 30 days",
-    enabled: false,
-  },
-];
+import { TypedPrecheckQuery } from "./queries";
+import { useCart } from "@saleor/sdk";
 
-const FinmidPaymentGateway: React.FC<IProps> = ({
-  processPayment,
-  formRef,
-  formId,
-  initialStatus,
-}: IProps) => {
+interface Props extends IProps {
+  checked: boolean;
+  onSelect: () => void;
+  processPayment: (token: string) => void;
+  name: string;
+  selectedPaymentGatewayToken?: string;
+}
+
+const FinmidPaymentGateway: React.FC<Props> = props => {
+  const { totalPrice } = useCart();
+
+  if (totalPrice == null) return null;
+
   return (
-    <Formik
-      initialValues={{ status: initialStatus || paymentOptions[0].token }}
-      onSubmit={(values, { setSubmitting }) => {
-        processPayment(values.status);
-        setSubmitting(false);
+    <TypedPrecheckQuery
+      variables={{
+        amount: totalPrice?.gross.amount,
       }}
     >
-      {({
-        handleChange,
-        handleSubmit,
-        handleBlur,
-        values,
-        isSubmitting,
-        isValid,
-      }) => (
-        <S.Form
-          id={formId}
-          ref={formRef}
-          onSubmit={handleSubmit}
-          data-test="finmidPaymentGatewayForm"
-        >
-          {paymentOptions.map(({ token, label, enabled }) => {
-            return (
-              <S.Status
-                key={token}
-                style={
-                  enabled
-                    ? {}
-                    : { backgroundColor: "rgb(243, 243, 243)", color: "#999" }
-                }
-              >
-                <Radio
-                  key={token}
-                  type="radio"
-                  name="status"
-                  value={token}
-                  disabled={!enabled}
-                  checked={values.status === token}
-                  onChange={handleChange}
-                >
-                  <span>{label}</span>
-                </Radio>
-              </S.Status>
-            );
-          })}
-        </S.Form>
+      {({ data, loading }) => (
+        <GatewayCheckbox
+          {...props}
+          precheck={data?.precheck}
+          loading={loading}
+        />
       )}
-    </Formik>
+    </TypedPrecheckQuery>
+  );
+};
+
+interface GatewayProps extends Props {
+  precheck: boolean | null | undefined;
+  loading: boolean;
+}
+
+const GatewayCheckbox: React.FC<GatewayProps> = ({
+  checked,
+  onSelect,
+  name,
+  formRef,
+  formId,
+  processPayment,
+  selectedPaymentGatewayToken,
+  loading,
+  precheck,
+}) => {
+  // Simulating longer loading precheck
+  const [loaded, setLoaded] = useState(false);
+
+  const canUseFinmid = loaded && precheck === true;
+
+  useEffect(() => {
+    if (!loading) {
+      setTimeout(() => setLoaded(true), 2000);
+    }
+  }, [loading]);
+
+  return !loaded ? (
+    <span>Checking if you can pay via finmid...</span>
+  ) : canUseFinmid ? (
+    <div>
+      <LS.Tile checked={checked}>
+        <Radio
+          data-test="checkoutPaymentGatewayDummyInput"
+          name="payment-method"
+          value="finmid"
+          checked={checked}
+          disabled={!(precheck ?? false)}
+          onChange={onSelect}
+          customLabel
+        >
+          <span data-test="checkoutPaymentGatewayDummyName">{name}</span>
+        </Radio>
+      </LS.Tile>
+      {checked && (
+        <FinmidPaymentGatewayForm
+          formRef={formRef}
+          formId={formId}
+          processPayment={processPayment}
+          initialStatus={selectedPaymentGatewayToken}
+        />
+      )}
+    </div>
+  ) : (
+    <span>Precheck eightball says "NO"</span>
   );
 };
 
