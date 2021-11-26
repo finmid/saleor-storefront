@@ -8,7 +8,7 @@ import { IProps } from "./types";
 
 import { TypedPrecheckQuery } from "./queries";
 import { useCart } from "@saleor/sdk";
-import { PayButton } from "./PayButton";
+// import { PayButton } from "./PayButton";
 
 interface Props extends IProps {
   checked: boolean;
@@ -84,7 +84,8 @@ const GatewayCheckbox: React.FC<GatewayProps> = ({
           onChange={onSelect}
           customLabel
         >
-          <PayButton />
+          <span>Buy Now Pay Later</span>
+          {/* <PayButton /> */}
         </Radio>
       </LS.Tile>
       {checked && (
