@@ -65,6 +65,8 @@ const GatewayCheckbox: React.FC<GatewayProps> = ({
   useEffect(() => {
     if (!loading) {
       setTimeout(() => setLoaded(true), 2000);
+    } else {
+      setLoaded(false);
     }
   }, [loading]);
 
