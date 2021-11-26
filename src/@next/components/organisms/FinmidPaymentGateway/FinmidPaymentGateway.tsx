@@ -8,6 +8,7 @@ import { IProps } from "./types";
 
 import { TypedPrecheckQuery } from "./queries";
 import { useCart } from "@saleor/sdk";
+import { PayButton } from "./PayButton";
 
 interface Props extends IProps {
   checked: boolean;
@@ -27,6 +28,7 @@ const FinmidPaymentGateway: React.FC<Props> = props => {
       variables={{
         amount: totalPrice?.gross.amount,
       }}
+      fetchPolicy="network-only"
     >
       {({ data, loading }) => (
         <GatewayCheckbox
@@ -80,7 +82,7 @@ const GatewayCheckbox: React.FC<GatewayProps> = ({
           onChange={onSelect}
           customLabel
         >
-          <span data-test="checkoutPaymentGatewayDummyName">{name}</span>
+          <PayButton />
         </Radio>
       </LS.Tile>
       {checked && (
