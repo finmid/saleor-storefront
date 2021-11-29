@@ -103,8 +103,8 @@ module.exports = ({ sourceDir, distDir }) => ({
     // PWA plugins
     new FaviconsWebpackPlugin({
       favicons: {
-        appDescription: "Storefront for the Saleor e-commerce platform",
-        appName: "Saleor",
+        appDescription: "CoNoC demo marketplace",
+        appName: "CoNoC",
         background: "#ddd",
         developerURL: null, // prevent retrieving from the nearest package.json
         display: "standalone",
