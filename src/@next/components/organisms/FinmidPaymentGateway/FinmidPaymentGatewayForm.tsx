@@ -7,7 +7,7 @@ import * as S from "./styles";
 import { IProps } from "./types";
 
 export const paymentOptions = [
-  { token: "fully-charged", label: "Buy now, pay in 60 days", enabled: true },
+  { token: "not-charged", label: "Buy now, pay in 60 days", enabled: true },
   {
     token: "partially-charged",
     label: "Buy now, repay with 3 equal installments every 30 days",
